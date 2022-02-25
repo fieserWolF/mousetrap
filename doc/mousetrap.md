@@ -55,14 +55,19 @@ easy to use | simple GUI provided
 # Getting Started
 
 Clone the git-repository to your computer:
-
-    git clone https://github.com/fieserWolF/mousetrap.git
+```
+git clone https://github.com/fieserWolF/mousetrap.git
+```
 
 Start the python script:
-    python3 mousetrap.py -i image.png -p ball.png -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -ml marker_lo.bin -mh marker_hi.bin
+```
+python3 mousetrap.py -i image.png -p ball.png -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -ml marker_lo.bin -mh marker_hi.bin
+```
 
 Or: Start the sample bash file:
-    ./go.sh
+```
+./go.sh
+```
 
 ### Prerequisites
 
