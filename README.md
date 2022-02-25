@@ -78,6 +78,7 @@ posy.bin|y-position (values 0 to 255)
 control|function
 ---|---
 left-mousebutton|start/stop recording
+F1|show help
 Alt+q|quit
 Alt+i|open image
 Alt+p|open pointer-image
