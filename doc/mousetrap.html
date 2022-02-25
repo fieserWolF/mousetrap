@@ -84,20 +84,21 @@ Example: ./mousetrap.py -i image.png -p ball.png -g ghost.png -xl posx-low.bin -
 </ul>
 <h1 id="getting-started">Getting Started</h1>
 <p>Clone the git-repository to your computer:</p>
-<pre><code>git clone mousetrap.git</code></pre>
+<pre><code>git clone https://github.com/fieserWolF/mousetrap.git</code></pre>
 <p>Start the python script: python3 mousetrap.py -i image.png -p ball.png -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -ml marker_lo.bin -mh marker_hi.bin</p>
+<p>Or: Start the sample bash file: ./go.sh</p>
 <h3 id="prerequisites">Prerequisites</h3>
 <p>At least this is needed to run the script directly:</p>
 <ul>
 <li>python 3</li>
-<li>argparse</li>
+<li>python tkinter module</li>
 <li>python “The Python Imaging Library” (PIL)</li>
 </ul>
 <p>Normally, you would use pip like this:</p>
-<pre><code>pip3 install argparse pillow</code></pre>
+<pre><code>pip3 install tk pillow</code></pre>
 <p>On my Debian GNU/Linux machine I use apt-get to install everything needed:</p>
 <pre><code>apt-get update
-apt-get install python3 python3-argh python3-pil</code></pre>
+apt-get install python3 python3-tk python3-pil python3-pil.imagetk</code></pre>
 <h1 id="changelog">Changelog</h1>
 <h2 id="future-plans">Future plans</h2>
 <ul>

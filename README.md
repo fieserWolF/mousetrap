@@ -56,28 +56,31 @@ easy to use | simple GUI provided
 
 Clone the git-repository to your computer:
 
-    git clone mousetrap.git
+    git clone https://github.com/fieserWolF/mousetrap.git
 
 Start the python script:
     python3 mousetrap.py -i image.png -p ball.png -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -ml marker_lo.bin -mh marker_hi.bin
+
+Or: Start the sample bash file:
+    ./go.sh
 
 ### Prerequisites
 
 At least this is needed to run the script directly:
 
 - python 3
-- argparse
+- python tkinter module
 - python "The Python Imaging Library" (PIL)
 
 Normally, you would use pip like this:
 ```
-pip3 install argparse pillow
+pip3 install tk pillow
 ```
 
 On my Debian GNU/Linux machine I use apt-get to install everything needed:
 ```
 apt-get update
-apt-get install python3 python3-argh python3-pil
+apt-get install python3 python3-tk python3-pil python3-pil.imagetk
 ```
 # Changelog
 
