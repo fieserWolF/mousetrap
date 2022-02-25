@@ -1,9 +1,21 @@
 # MouseTrap
 
 MouseTrap records mouse movements and writes them to binary data files.
-It runs on 64 bit versions of Linux, MacOS, Windows and other systems supported by Python. 
+It is aimed towards development on the Commodore 64.
+This is why the screen dimensions default to 320x200.
+
+MouseTrap runs on 64 bit versions of Linux, MacOS, Windows and other systems supported by Python. 
 
 ![screenshot](./screenshot.png)
+
+This tool might be helpful for code projects that need some x-y positions stored as plain binary data.
+You can easily move your mouse pointer over some background-image that serves as a preview of the final result.
+A simple player and a timeline is also provided for easy editing.
+You can play forwards and backwards at different speeds, or you can preview your movements step-by-step.
+When satisfied with your movements you may add markers at certain positions in the timeline.
+These markers can be used later on in your code then.
+
+
 
 # Why MouseTrap?
 
@@ -14,7 +26,22 @@ portable | available on Linux, MacOS, Windows and any other system supported by 
 easy to use | simple GUI provided
 
 
-# Usage
+
+# Files
+
+file|description
+---|---
+ball.png|example (sprite)pointer image
+ghost.png|example image of previously-recorded data
+image.png|example background-image
+marker_hi.bin|marker binary high (values above 255)
+marker_lo.bin|marker binary low (values 0 to 255)
+posx_hi.bin|x-position binary high (values above 255)
+posx_lo.bin|x-position binary low (values 0 to 255)
+posy.bin|y-position (values 0 to 255)
+
+
+# Commandline options
 
     MouseTrap v1.03 [17.01.2022] *** by fieserWolF
     usage: mousetrap.py [-h] [-i IMAGE_FILE] [-p POINTER_FILE] [-g GHOST_FILE] [-xl POSX_LO_FILE] [-xh POSX_HI_FILE] [-y POSY_FILE] [-ml MARKER_LO_FILE]
@@ -44,7 +71,39 @@ easy to use | simple GUI provided
     Example: ./mousetrap.py -i image.png -p ball.png -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -ml marker_lo.bin -mh marker_hi.bin
 
 
+# Controls
 
+## main control
+
+control|function
+---|---
+left-mousebutton|start/stop recording
+Alt+q|quit
+Alt+i|open image
+Alt+p|open pointer-image
+Alt+g|open ghost-image
+Alt+s|save data
+Alt+r|reload data
+
+## player controls
+
+control|function
+---|---
+r|reset
+f|play forward
+space|stop
+b|play backward
+n|play next step
+v|play previous step
+
+## marker controls
+
+control|function
+---|---
+m|set marker
+n|jump to next marker
+p|jump to previous marker
+g|go to current marker
 
 
 # Author
