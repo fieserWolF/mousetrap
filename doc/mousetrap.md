@@ -134,18 +134,19 @@ Or: Start the sample bash file:
 At least this is needed to run the script directly:
 
 - python 3
+- argparse
 - python tkinter module
 - python "The Python Imaging Library" (PIL)
 
 Normally, you would use pip like this:
 ```
-pip3 install tk pillow
+pip3 install argparse tk pillow
 ```
 
 On my Debian GNU/Linux machine I use apt-get to install everything needed:
 ```
 apt-get update
-apt-get install python3 python3-tk python3-pil python3-pil.imagetk
+apt-get install python3 python3-tk python3-pil python3-pil.imagetk python3-argh
 ```
 # Changelog
 

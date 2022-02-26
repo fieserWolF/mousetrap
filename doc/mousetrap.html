@@ -244,14 +244,15 @@ Example: ./mousetrap.py -i image.png -p ball.png -g ghost.png -xl posx-low.bin -
 <p>At least this is needed to run the script directly:</p>
 <ul>
 <li>python 3</li>
+<li>argparse</li>
 <li>python tkinter module</li>
 <li>python “The Python Imaging Library” (PIL)</li>
 </ul>
 <p>Normally, you would use pip like this:</p>
-<pre><code>pip3 install tk pillow</code></pre>
+<pre><code>pip3 install argparse tk pillow</code></pre>
 <p>On my Debian GNU/Linux machine I use apt-get to install everything needed:</p>
 <pre><code>apt-get update
-apt-get install python3 python3-tk python3-pil python3-pil.imagetk</code></pre>
+apt-get install python3 python3-tk python3-pil python3-pil.imagetk python3-argh</code></pre>
 <h1 id="changelog">Changelog</h1>
 <h2 id="future-plans">Future plans</h2>
 <ul>
