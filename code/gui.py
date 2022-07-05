@@ -26,6 +26,12 @@ def OpenFile_Ghost():
     if not user_filename_open : return None
     action.load_image_ghost(user_filename_open)
 
+def OpenFile_Animation():    
+    ftypes = [('Image Files', '*.webp')]
+    user_filename_open = askopenfilename(filetypes = ftypes)
+    if not user_filename_open : return None
+    action.load_image_anim(user_filename_open)
+
 
 def quit_application():
     global command_play
@@ -48,6 +54,7 @@ def create_drop_down_menu (
     filemenu.add_command(label="open image", command=OpenFile_Image, underline=5, accelerator="Alt+I")
     filemenu.add_command(label="open pointer", command=OpenFile_Pointer, underline=5, accelerator="Alt+P")
     filemenu.add_command(label="open ghost", command=OpenFile_Ghost, underline=5, accelerator="Alt+G")
+    filemenu.add_command(label="open animation", command=OpenFile_Animation, underline=5, accelerator="Alt+A")
     filemenu.add_command(label="save data", command=action.save_data, underline=0, accelerator="Alt+S")
     filemenu.add_separator()
     filemenu.add_command(label="quit", command=quit_application, underline=0, accelerator="Alt+Q")
@@ -64,7 +71,7 @@ def create_drop_down_menu (
     infomenu.add_command(label="help", command=gui_info.show_info_window, underline=0, accelerator="f1")
 
     #add all menus
-    menu.add_cascade(label="menu", menu=filemenu)
+    menu.add_cascade(label="file", menu=filemenu)
     menu.add_cascade(label="data", menu=datamenu)
     menu.add_cascade(label="info", menu=infomenu)
 
@@ -197,6 +204,7 @@ def create_player_controls (
             ('go to marker', myGlobals.GFX_MARKER_GOTO, 0, 0,2, action.marker_goto),
             ('next marker', myGlobals.GFX_MARKER_NEXT, 0, 0,3, action.marker_next),
             ('delete marker', myGlobals.GFX_MARKER_DELETE, 0, 0,4, action.marker_delete),
+            ('record look', myGlobals.GFX_RECORD_LOOK, 0, 0,5, action.record_look),
 
             ('previous', myGlobals.GFX_PREVIOUS, 3, 1,0, action.play_prev),
             ('backward', myGlobals.GFX_BACKWARD, 0, 1,1, action.play_backward),
@@ -219,6 +227,7 @@ def create_player_controls (
         )
         if (text == 'forward') : myGlobals.button_forward = my_button
         if (text == 'backward') : myGlobals.button_backward = my_button
+        if (text == 'record look') : myGlobals.button_record_look = my_button
         #placement in grid layout
         my_button.grid(
             row= my_row,
@@ -447,6 +456,7 @@ def create_settings (
     SETTINGS = [
         #text, variable, row, column, low, high
         ('player speed', myGlobals.player_speed, 1,0, 1,myGlobals.PLAYER_SPEED_MAX),
+        ('animation', myGlobals.anim_image_number, 2,0, 0,myGlobals.anim_image_max),
     ]
 
     for text, var, my_row, my_column, low, high in SETTINGS:
@@ -462,6 +472,7 @@ def create_settings (
             cursor=myGlobals.MOUSEPOINTER_HAND,
             showvalue=0,
             #command=action.action_preview_scale
+            command=lambda event: action.refresh_image()
         )
         scale_settings.grid(
             row=my_row,

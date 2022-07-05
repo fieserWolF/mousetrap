@@ -25,7 +25,7 @@
 <figure>
 <img src="./screenshot.png" alt="" /><figcaption>screenshot</figcaption>
 </figure>
-<p>This tool might be helpful for code projects that need some x-y positions stored as plain binary data. You can easily move your mouse pointer over some background-image that serves as a preview of the final result. A simple player and a timeline is also provided for easy editing. You can play forwards and backwards at different speeds, or you can preview your movements step-by-step. When satisfied with your movements you may add markers at certain positions in the timeline. These markers can be used later on in your code then.</p>
+<p>This tool might be helpful for code projects that need some x-y positions stored as plain binary data. You can easily move your mouse pointer over some background-image that serves as a preview of the final result. A simple player and a timeline is also provided for easy editing. You can play forwards and backwards at different speeds, or you can preview your movements step-by-step. When satisfied with your movements you may add markers at certain positions in the timeline. These markers can be used later on in your code then. Also, you can add animation steps to your object while playing the pre-recorded x-y positions.</p>
 <h1 id="why-mousetrap">Why MouseTrap?</h1>
 <table>
 <colgroup>
@@ -64,15 +64,23 @@
 <tbody>
 <tr class="odd">
 <td>ball.png</td>
-<td>example (sprite)pointer image</td>
+<td>(sprite)pointer image</td>
 </tr>
 <tr class="even">
 <td>ghost.png</td>
-<td>example image of previously-recorded data</td>
+<td>(sprite)pointer image of previously-recorded data</td>
 </tr>
 <tr class="odd">
 <td>image.png</td>
-<td>example background-image</td>
+<td>background-image</td>
+</tr>
+<tr class="even">
+<td>rocket-image.png</td>
+<td>background-image for rocket animation</td>
+</tr>
+<tr class="odd">
+<td>rocket.webp</td>
+<td>rocket animation, 16 layers</td>
 </tr>
 <tr class="even">
 <td>marker_hi.bin</td>
@@ -94,19 +102,25 @@
 <td>posy.bin</td>
 <td>y-position (values 0 to 255)</td>
 </tr>
+<tr class="odd">
+<td>look.bin</td>
+<td>look of sprite, animation steps (values 0 to 255)</td>
+</tr>
 </tbody>
 </table>
 <h1 id="commandline-options">Commandline options</h1>
-<pre><code>MouseTrap v1.03 [17.01.2022] *** by fieserWolF
-usage: mousetrap.py [-h] [-i IMAGE_FILE] [-p POINTER_FILE] [-g GHOST_FILE] [-xl POSX_LO_FILE] [-xh POSX_HI_FILE] [-y POSY_FILE] [-ml MARKER_LO_FILE]
-                    [-mh MARKER_HI_FILE]
+<pre><code>MouseTrap v1.05 [03.07.2022] *** by fieserWolF
+usage: mousetrap.py [-h] [-a ANIM_FILE] [-b BACKGROUND_FILE] [-p POINTER_FILE] [-g GHOST_FILE] [-xl POSX_LO_FILE] [-xh POSX_HI_FILE] [-y POSY_FILE]
+                    [-l LOOK_FILE] [-ml MARKER_LO_FILE] [-mh MARKER_HI_FILE]
 
 This records mouse movements and writes them to binary data files. Press F1 for help in the program.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
-  -i IMAGE_FILE, --image_file IMAGE_FILE
-                        image file (320x200 pixel)
+  -a ANIM_FILE, --anim_file ANIM_FILE
+                        animation pointer image file
+  -b BACKGROUND_FILE, --background_file BACKGROUND_FILE
+                        background image file (320x200 pixel)
   -p POINTER_FILE, --pointer_file POINTER_FILE
                         optional pointer image file (44x46 pixel): it follows the mousepointer
   -g GHOST_FILE, --ghost_file GHOST_FILE
@@ -117,12 +131,14 @@ optional arguments:
                         posx high file (default=&quot;posx_hi.bin&quot;)
   -y POSY_FILE, --posy_file POSY_FILE
                         posy file (default=&quot;posy.bin&quot;)
+  -l LOOK_FILE, --look_file LOOK_FILE
+                        look-datafile: which sprite is used for each position (default=&quot;look.bin&quot;)
   -ml MARKER_LO_FILE, --marker_lo_file MARKER_LO_FILE
                         marker file (default=&quot;marker_lo.bin&quot;)
   -mh MARKER_HI_FILE, --marker_hi_file MARKER_HI_FILE
                         marker file (default=&quot;marker_hi.bin&quot;)
 
-Example: ./mousetrap.py -i image.png -p ball.png -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -ml marker_lo.bin -mh marker_hi.bin</code></pre>
+Example: ./mousetrap.py -b image.png -p ball.png -a rocket.webp -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -l look.bin -ml marker_lo.bin -mh marker_hi.bin</code></pre>
 <h1 id="controls">Controls</h1>
 <h2 id="main-control">main control</h2>
 <table>
@@ -158,10 +174,14 @@ Example: ./mousetrap.py -i image.png -p ball.png -g ghost.png -xl posx-low.bin -
 <td>open ghost-image</td>
 </tr>
 <tr class="odd">
+<td>Alt+g</td>
+<td>open animation-image</td>
+</tr>
+<tr class="even">
 <td>Alt+s</td>
 <td>save data</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Alt+r</td>
 <td>reload data</td>
 </tr>
@@ -261,6 +281,14 @@ apt-get install python3 python3-tk python3-pil python3-pil.imagetk python3-argh<
 <p>Any help and support in any form is highly appreciated.</p>
 <p>If you have a feature request, a bug report or if you want to offer help, please, contact me:</p>
 <p><a href="http://csdb.dk/scener/?id=3623">http://csdb.dk/scener/?id=3623</a> or <a href="wolf@abyss-connection.de">wolf@abyss-connection.de</a></p>
+<h2 id="changes-in-1.05">Changes in 1.05</h2>
+<ul>
+<li>added support for animations</li>
+</ul>
+<h2 id="changes-in-1.04">Changes in 1.04</h2>
+<ul>
+<li>bug-fixes and improvements</li>
+</ul>
 <h2 id="changes-in-1.03">Changes in 1.03</h2>
 <ul>
 <li>initial public release</li>

@@ -83,6 +83,7 @@ def clear_data():
     print('Clearing data...')
     myGlobals.data_posx = []
     myGlobals.data_posy = []
+    myGlobals.data_look = []
     myGlobals.data_marker = []
     myGlobals.play_pos = 0
     refresh_image()
@@ -138,6 +139,18 @@ def marker_delete_rest():
     
     
 
+def record_look():
+    if (myGlobals.command_record_look == 'start') :
+        #print('record look stop')
+        myGlobals.command_record_look = 'stop'
+        myGlobals.button_record_look.configure(relief=RAISED)
+        return None
+        
+    #print('record look start')
+    myGlobals.command_record_look = 'start'
+    myGlobals.button_record_look.configure(relief=SUNKEN)
+
+
 def marker_next():
     #writes marker_number
     if (len(myGlobals.data_marker) > 0) :        
@@ -190,9 +203,22 @@ def marker_delete():
 
 def refresh_image():
     #image
+
+    if (myGlobals.command_record_look == 'start' ) :
+        anim_image_number = myGlobals.anim_image_number.get() % myGlobals.anim_image_max
+    else :
+        anim_image_number = myGlobals.ghost_look
+    
     final_image = myGlobals.background_image.copy()    
-    final_image.paste(myGlobals.ghost_image, (myGlobals.ghost_posx, myGlobals.ghost_posy), myGlobals.ghost_image)
+
+    if (len(myGlobals.anim_image) > 0) :
+        #final_image.paste(myGlobals.anim_image[anim_image_number], (myGlobals.ghost_posx, myGlobals.ghost_posy), myGlobals.anim_image[anim_image_number])
+        final_image.paste(myGlobals.anim_image[anim_image_number], (myGlobals.ghost_posx, myGlobals.ghost_posy), myGlobals.anim_image[anim_image_number])
+    else :
+        final_image.paste(myGlobals.ghost_image, (myGlobals.ghost_posx, myGlobals.ghost_posy), myGlobals.ghost_image)
+
     final_image.paste(myGlobals.ball_image, (myGlobals.mouse_posx, myGlobals.mouse_posy), myGlobals.ball_image)
+
     myGlobals.image_background_Tk = ImageTk.PhotoImage(final_image)
     myGlobals.label_background_image.configure(image=myGlobals.image_background_Tk)
     myGlobals.label_background_image.image = final_image # keep a reference!
@@ -209,6 +235,10 @@ def refresh_image():
     myGlobals.image_timeline_Tk = ImageTk.PhotoImage(final_image)
     myGlobals.label_timeline_image.configure(image=myGlobals.image_timeline_Tk)
     myGlobals.label_timeline_image.image = final_image # keep a reference!
+
+    # slider: look (animation of ghost-pointer)
+    if (myGlobals.command_record_look == 'stop' ) :
+        myGlobals.anim_image_number.set(myGlobals.ghost_look)
 
     update_info()
 
@@ -260,6 +290,9 @@ def save_data():
     #posy
     save_some_data(myGlobals.args.posy_file, myGlobals.data_posy)
 
+    #look
+    save_some_data(myGlobals.args.look_file, myGlobals.data_look)
+
     #marker low
     tmp = []
     for i in myGlobals.data_marker :
@@ -276,15 +309,16 @@ def save_data():
 def load_some_data (
     filename
 ) :
+    buffer=[]
+
 	#open input file
     print ('Opening file "%s" for reading...' % filename)
     try:
         file_in = open(filename , 'rb')
     except IOError as err:
         print('I/O error: {0}'.format(err))
-        return None
+        return buffer
 
-    buffer=[]
     while True:
         data = file_in.read(1)  #read 1 byte
         if not data: break
@@ -308,6 +342,7 @@ def load_data(
         myGlobals.data_posx.append(tmp_l[i] + (tmp_h[i] << 8))
     
     myGlobals.data_posy = load_some_data(myGlobals.args.posy_file)
+    myGlobals.data_look = load_some_data(myGlobals.args.look_file)
 
     tmp_l = load_some_data(myGlobals.args.marker_lo_file)
     tmp_h = load_some_data(myGlobals.args.marker_hi_file)
@@ -343,6 +378,32 @@ def load_background_image(
     myGlobals.background_image = myGlobals.background_image.resize((myGlobals.IMAGE_VISIBLE_WIDTH, myGlobals.IMAGE_VISIBLE_HEIGHT))
     myGlobals.background_image = myGlobals.background_image.convert('RGB')
 
+
+
+
+def load_image_anim(
+	filename
+):    
+    print('Opening multi-layered animation-image "%s"...' % filename)
+
+    my_image = PilImage.open(filename)
+    if ( my_image.is_animated ) :
+        print('%d frames found.' %my_image.n_frames)
+        myGlobals.anim_image_max = my_image.n_frames
+        
+        myGlobals.anim_image = []
+        for frame in range(0,my_image.n_frames):
+            my_image.seek(frame)
+            new_image = my_image.copy()
+            new_image = new_image.resize((myGlobals.OBJ_WIDTH, myGlobals.OBJ_HEIGHT))
+            new_image = new_image.convert("RGBA")
+            myGlobals.anim_image.append(new_image)
+
+        #myGlobals.anim_image[0].show()
+        #myGlobals.anim_image[1].show()
+        
+    else :
+        print('Error: No multiple layers found in image.')
 
 
 
@@ -430,12 +491,16 @@ def play_pos_to_ghost() :
     if (myGlobals.play_pos < 0) : myGlobals.play_pos = len(myGlobals.data_posx)-1
     if (myGlobals.play_pos > len(myGlobals.data_posx)-1) : myGlobals.play_pos = 0
 
+    if (myGlobals.command_record_look == 'start') :
+        myGlobals.data_look[myGlobals.play_pos] = myGlobals.anim_image_number.get() % myGlobals.anim_image_max
+
     factor = len(myGlobals.data_posx)
     if (factor == 0) : factor = 1
     
     if (len(myGlobals.data_posx)>0) :
         myGlobals.ghost_posx = myGlobals.data_posx[myGlobals.play_pos]*2
         myGlobals.ghost_posy = myGlobals.data_posy[myGlobals.play_pos]*2
+        myGlobals.ghost_look = myGlobals.data_look[myGlobals.play_pos]
         myGlobals.timeline_position.set( int(( myGlobals.play_pos / factor )*100) )
     refresh_image()
 #    root.update()
@@ -500,6 +565,7 @@ def mouseMotion(event):
         tmp_posy = int(myGlobals.mouse_posy/2)
         myGlobals.data_posx.append(tmp_posx)
         myGlobals.data_posy.append(tmp_posy & 0b11111111)
+        myGlobals.data_look.append(0)
 
 
     refresh_image()

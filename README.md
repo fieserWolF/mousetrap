@@ -14,6 +14,7 @@ A simple player and a timeline is also provided for easy editing.
 You can play forwards and backwards at different speeds, or you can preview your movements step-by-step.
 When satisfied with your movements you may add markers at certain positions in the timeline.
 These markers can be used later on in your code then.
+Also, you can add animation steps to your object while playing the pre-recorded x-y positions.
 
 
 
@@ -31,28 +32,33 @@ easy to use | simple GUI provided
 
 file|description
 ---|---
-ball.png|example (sprite)pointer image
-ghost.png|example image of previously-recorded data
-image.png|example background-image
+ball.png|(sprite)pointer image
+ghost.png|(sprite)pointer image of previously-recorded data
+image.png|background-image
+rocket-image.png|background-image for rocket animation
+rocket.webp|rocket animation, 16 layers
 marker_hi.bin|marker binary high (values above 255)
 marker_lo.bin|marker binary low (values 0 to 255)
 posx_hi.bin|x-position binary high (values above 255)
 posx_lo.bin|x-position binary low (values 0 to 255)
 posy.bin|y-position (values 0 to 255)
+look.bin|look of sprite, animation steps (values 0 to 255)
 
 
 # Commandline options
 
-    MouseTrap v1.03 [17.01.2022] *** by fieserWolF
-    usage: mousetrap.py [-h] [-i IMAGE_FILE] [-p POINTER_FILE] [-g GHOST_FILE] [-xl POSX_LO_FILE] [-xh POSX_HI_FILE] [-y POSY_FILE] [-ml MARKER_LO_FILE]
-                        [-mh MARKER_HI_FILE]
+    MouseTrap v1.05 [03.07.2022] *** by fieserWolF
+    usage: mousetrap.py [-h] [-a ANIM_FILE] [-b BACKGROUND_FILE] [-p POINTER_FILE] [-g GHOST_FILE] [-xl POSX_LO_FILE] [-xh POSX_HI_FILE] [-y POSY_FILE]
+                        [-l LOOK_FILE] [-ml MARKER_LO_FILE] [-mh MARKER_HI_FILE]
 
     This records mouse movements and writes them to binary data files. Press F1 for help in the program.
 
-    optional arguments:
+    options:
       -h, --help            show this help message and exit
-      -i IMAGE_FILE, --image_file IMAGE_FILE
-                            image file (320x200 pixel)
+      -a ANIM_FILE, --anim_file ANIM_FILE
+                            animation pointer image file
+      -b BACKGROUND_FILE, --background_file BACKGROUND_FILE
+                            background image file (320x200 pixel)
       -p POINTER_FILE, --pointer_file POINTER_FILE
                             optional pointer image file (44x46 pixel): it follows the mousepointer
       -g GHOST_FILE, --ghost_file GHOST_FILE
@@ -63,12 +69,14 @@ posy.bin|y-position (values 0 to 255)
                             posx high file (default="posx_hi.bin")
       -y POSY_FILE, --posy_file POSY_FILE
                             posy file (default="posy.bin")
+      -l LOOK_FILE, --look_file LOOK_FILE
+                            look-datafile: which sprite is used for each position (default="look.bin")
       -ml MARKER_LO_FILE, --marker_lo_file MARKER_LO_FILE
                             marker file (default="marker_lo.bin")
       -mh MARKER_HI_FILE, --marker_hi_file MARKER_HI_FILE
                             marker file (default="marker_hi.bin")
 
-    Example: ./mousetrap.py -i image.png -p ball.png -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -ml marker_lo.bin -mh marker_hi.bin
+    Example: ./mousetrap.py -b image.png -p ball.png -a rocket.webp -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -l look.bin -ml marker_lo.bin -mh marker_hi.bin
 
 
 # Controls
@@ -83,8 +91,10 @@ Alt+q|quit
 Alt+i|open image
 Alt+p|open pointer-image
 Alt+g|open ghost-image
+Alt+g|open animation-image
 Alt+s|save data
 Alt+r|reload data
+
 
 ## player controls
 
@@ -161,6 +171,16 @@ If you have a feature request, a bug report or if you want to offer help, please
 [http://csdb.dk/scener/?id=3623](http://csdb.dk/scener/?id=3623)
 or
 [wolf@abyss-connection.de](wolf@abyss-connection.de)
+
+
+## Changes in 1.05
+
+- added support for animations
+
+
+## Changes in 1.04
+
+- bug-fixes and improvements
 
 
 ## Changes in 1.03

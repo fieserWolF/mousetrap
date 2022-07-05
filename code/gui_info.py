@@ -12,6 +12,7 @@ def show_info_window (
         '<Alt-i>: open image\n' \
         '<Alt-p>: open pointer-image\n' \
         '<Alt-g>: open ghost-image\n' \
+        '<Alt-a>: open animation-image\n' \
         '<Alt-s>: save data\n' \
         '<Alt-r>: reload data\n' \
         '\n' \

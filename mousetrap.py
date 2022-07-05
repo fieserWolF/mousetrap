@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
 """
-MouseTrap v1.04 [26.02.2022] *** by fieserWolF
-usage: mousetrap.py [-h] [-b BACKGROUND_FILE] [-p POINTER_FILE] [-g GHOST_FILE] [-xl POSX_LO_FILE] [-xh POSX_HI_FILE] [-y POSY_FILE] [-ml MARKER_LO_FILE]
-                    [-mh MARKER_HI_FILE]
+MouseTrap v1.05 [03.07.2022] *** by fieserWolF
+usage: mousetrap.py [-h] [-a ANIM_FILE] [-b BACKGROUND_FILE] [-p POINTER_FILE] [-g GHOST_FILE] [-xl POSX_LO_FILE] [-xh POSX_HI_FILE] [-y POSY_FILE]
+                    [-l LOOK_FILE] [-ml MARKER_LO_FILE] [-mh MARKER_HI_FILE]
 
 This records mouse movements and writes them to binary data files. Press F1 for help in the program.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
+  -a ANIM_FILE, --anim_file ANIM_FILE
+                        animation pointer image file
   -b BACKGROUND_FILE, --background_file BACKGROUND_FILE
                         background image file (320x200 pixel)
   -p POINTER_FILE, --pointer_file POINTER_FILE
@@ -21,12 +23,14 @@ optional arguments:
                         posx high file (default="posx_hi.bin")
   -y POSY_FILE, --posy_file POSY_FILE
                         posy file (default="posy.bin")
+  -l LOOK_FILE, --look_file LOOK_FILE
+                        look-datafile: which sprite is used for each position (default="look.bin")
   -ml MARKER_LO_FILE, --marker_lo_file MARKER_LO_FILE
                         marker file (default="marker_lo.bin")
   -mh MARKER_HI_FILE, --marker_hi_file MARKER_HI_FILE
                         marker file (default="marker_hi.bin")
 
-Example: ./mousetrap.py -b image.png -p ball.png -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -ml marker_lo.bin -mh marker_hi.bin
+Example: ./mousetrap.py -b image.png -p ball.png -a rocket.webp -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -l look.bin -ml marker_lo.bin -mh marker_hi.bin
 """
 
 import code.main as main

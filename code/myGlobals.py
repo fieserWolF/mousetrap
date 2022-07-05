@@ -31,8 +31,11 @@ GFX_MARKER_PREV = resource_path('resources/icon_prev_marker.xbm')
 GFX_MARKER_DELETE = resource_path('resources/icon_del_marker.xbm')
 GFX_MARKER_GOTO = resource_path('resources/icon_goto_marker.xbm')
 
+GFX_RECORD_LOOK = resource_path('resources/icon_record_look.xbm')
+
 GFX_TIMELINE_CURSOR = resource_path('resources/cursor.png')
 GFX_TIMELINE_MARKER = resource_path('resources/marker.png')
+
 
 #GFX_PAUSE = resource_path('resources/icon_pause.xbm')
 #GFX_REWIND = resource_path('resources/icon_rewind.xbm')
@@ -40,8 +43,8 @@ GFX_TIMELINE_MARKER = resource_path('resources/marker.png')
 
 
 PROGNAME = 'MouseTrap';
-VERSION = '1.04';
-LAST_EDITED = '26.02.2022';
+VERSION = '1.05';
+LAST_EDITED = '03.07.2022';
 
 IMAGE_WIDTH     = 320
 IMAGE_HEIGHT    = 200
@@ -92,6 +95,7 @@ mousepointer_image = MOUSEPOINTER_NORMAL
 
 data_posx = []
 data_posy = []
+data_look = []
 data_marker = []
 data_length = 0
 flag_record = False
@@ -114,10 +118,15 @@ ball_image = PilImage.new('RGBA', (OBJ_WIDTH, OBJ_HEIGHT), 'black')
 ghost_image = PilImage.new('RGBA', (GHOST_WIDTH, GHOST_HEIGHT), 'black')
 marker_single_image = PilImage.new('RGBA', (MARKER_SINGLE_WIDTH, MARKER_SINGLE_HEIGHT), 'black')
 cursor_timeline_image = PilImage.new('RGBA', (CURSOR_WIDTH, CURSOR_HEIGHT), 'black')
+#anim_image = PilImage.new('RGBA', (OBJ_WIDTH, OBJ_HEIGHT), 'black')
+anim_image = []
+anim_image_number = IntVar()
+anim_image_max = 50
 
 button_play = Button()
 button_forward = Button()
 button_backward = Button()
+button_record_look = Button()
 
 textvariable_mode   = StringVar()
 textvariable_coords = StringVar()
@@ -129,6 +138,7 @@ mouse_posy = 0
 
 ghost_posx = 0
 ghost_posy = 0
+ghost_look = 0
 
 play_pos = 0
 marker_number = 0
@@ -139,4 +149,5 @@ last_marker   = 0
 
 mode='idle'
 command_play = 'stop'
+command_record_look = 'stop'
 
