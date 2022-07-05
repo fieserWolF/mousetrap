@@ -31,7 +31,7 @@ GFX_MARKER_PREV = resource_path('resources/icon_prev_marker.xbm')
 GFX_MARKER_DELETE = resource_path('resources/icon_del_marker.xbm')
 GFX_MARKER_GOTO = resource_path('resources/icon_goto_marker.xbm')
 
-GFX_RECORD_LOOK = resource_path('resources/icon_record_look.xbm')
+GFX_RECORD_ANIMATION = resource_path('resources/icon_record_animation.xbm')
 
 GFX_TIMELINE_CURSOR = resource_path('resources/cursor.png')
 GFX_TIMELINE_MARKER = resource_path('resources/marker.png')
@@ -95,7 +95,7 @@ mousepointer_image = MOUSEPOINTER_NORMAL
 
 data_posx = []
 data_posy = []
-data_look = []
+data_animation = []
 data_marker = []
 data_length = 0
 flag_record = False
@@ -126,7 +126,7 @@ anim_image_max = 50
 button_play = Button()
 button_forward = Button()
 button_backward = Button()
-button_record_look = Button()
+button_record_animation = Button()
 
 textvariable_mode   = StringVar()
 textvariable_coords = StringVar()
@@ -138,7 +138,7 @@ mouse_posy = 0
 
 ghost_posx = 0
 ghost_posy = 0
-ghost_look = 0
+ghost_animation = 0
 
 play_pos = 0
 marker_number = 0
@@ -149,5 +149,5 @@ last_marker   = 0
 
 mode='idle'
 command_play = 'stop'
-command_record_look = 'stop'
+command_record_animation = 'stop'
 

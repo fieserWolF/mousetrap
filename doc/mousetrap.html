@@ -103,21 +103,21 @@
 <td>y-position (values 0 to 255)</td>
 </tr>
 <tr class="odd">
-<td>look.bin</td>
+<td>animation.bin</td>
 <td>look of sprite, animation steps (values 0 to 255)</td>
 </tr>
 </tbody>
 </table>
 <h1 id="commandline-options">Commandline options</h1>
 <pre><code>MouseTrap v1.05 [03.07.2022] *** by fieserWolF
-usage: mousetrap.py [-h] [-a ANIM_FILE] [-b BACKGROUND_FILE] [-p POINTER_FILE] [-g GHOST_FILE] [-xl POSX_LO_FILE] [-xh POSX_HI_FILE] [-y POSY_FILE]
-                    [-l LOOK_FILE] [-ml MARKER_LO_FILE] [-mh MARKER_HI_FILE]
+usage: mousetrap.py [-h] [-ai ANIM_IMAGE_FILE] [-b BACKGROUND_FILE] [-p POINTER_FILE] [-g GHOST_FILE] [-xl POSX_LO_FILE] [-xh POSX_HI_FILE]
+                    [-y POSY_FILE] [-a ANIM_FILE] [-ml MARKER_LO_FILE] [-mh MARKER_HI_FILE]
 
 This records mouse movements and writes them to binary data files. Press F1 for help in the program.
 
 options:
   -h, --help            show this help message and exit
-  -a ANIM_FILE, --anim_file ANIM_FILE
+  -ai ANIM_IMAGE_FILE, --anim_image_file ANIM_IMAGE_FILE
                         animation pointer image file
   -b BACKGROUND_FILE, --background_file BACKGROUND_FILE
                         background image file (320x200 pixel)
@@ -131,14 +131,14 @@ options:
                         posx high file (default=&quot;posx_hi.bin&quot;)
   -y POSY_FILE, --posy_file POSY_FILE
                         posy file (default=&quot;posy.bin&quot;)
-  -l LOOK_FILE, --look_file LOOK_FILE
-                        look-datafile: which sprite is used for each position (default=&quot;look.bin&quot;)
+  -a ANIM_FILE, --animation_file ANIM_FILE
+                        animation-datafile: which sprite is used for each position (default=&quot;animation.bin&quot;)
   -ml MARKER_LO_FILE, --marker_lo_file MARKER_LO_FILE
                         marker file (default=&quot;marker_lo.bin&quot;)
   -mh MARKER_HI_FILE, --marker_hi_file MARKER_HI_FILE
                         marker file (default=&quot;marker_hi.bin&quot;)
 
-Example: ./mousetrap.py -b image.png -p ball.png -a rocket.webp -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -l look.bin -ml marker_lo.bin -mh marker_hi.bin</code></pre>
+Example: ./mousetrap.py -b image.png -p ball.png -ai rocket.webp -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -a animation.bin -ml marker_lo.bin -mh marker_hi.bin</code></pre>
 <h1 id="controls">Controls</h1>
 <h2 id="main-control">main control</h2>
 <table>
@@ -206,7 +206,7 @@ Example: ./mousetrap.py -b image.png -p ball.png -a rocket.webp -g ghost.png -xl
 </tr>
 <tr class="odd">
 <td>space</td>
-<td>stop</td>
+<td>stop playback</td>
 </tr>
 <tr class="even">
 <td>b</td>
@@ -219,6 +219,10 @@ Example: ./mousetrap.py -b image.png -p ball.png -a rocket.webp -g ghost.png -xl
 <tr class="even">
 <td>v</td>
 <td>play previous step</td>
+</tr>
+<tr class="odd">
+<td>a</td>
+<td>toggle record animation on/off</td>
 </tr>
 </tbody>
 </table>

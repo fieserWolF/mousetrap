@@ -83,7 +83,7 @@ def clear_data():
     print('Clearing data...')
     myGlobals.data_posx = []
     myGlobals.data_posy = []
-    myGlobals.data_look = []
+    myGlobals.data_animation = []
     myGlobals.data_marker = []
     myGlobals.play_pos = 0
     refresh_image()
@@ -139,16 +139,16 @@ def marker_delete_rest():
     
     
 
-def record_look():
-    if (myGlobals.command_record_look == 'start') :
-        #print('record look stop')
-        myGlobals.command_record_look = 'stop'
-        myGlobals.button_record_look.configure(relief=RAISED)
+def toggle_record_animation():
+    if (myGlobals.command_record_animation == 'start') :
+        #print('record animation stop')
+        myGlobals.command_record_animation = 'stop'
+        myGlobals.button_record_animation.configure(relief=RAISED)
         return None
         
-    #print('record look start')
-    myGlobals.command_record_look = 'start'
-    myGlobals.button_record_look.configure(relief=SUNKEN)
+    #print('record animation start')
+    myGlobals.command_record_animation = 'start'
+    myGlobals.button_record_animation.configure(relief=SUNKEN)
 
 
 def marker_next():
@@ -204,10 +204,10 @@ def marker_delete():
 def refresh_image():
     #image
 
-    if (myGlobals.command_record_look == 'start' ) :
+    if (myGlobals.command_record_animation == 'start' ) :
         anim_image_number = myGlobals.anim_image_number.get() % myGlobals.anim_image_max
     else :
-        anim_image_number = myGlobals.ghost_look
+        anim_image_number = myGlobals.ghost_animation
     
     final_image = myGlobals.background_image.copy()    
 
@@ -236,9 +236,9 @@ def refresh_image():
     myGlobals.label_timeline_image.configure(image=myGlobals.image_timeline_Tk)
     myGlobals.label_timeline_image.image = final_image # keep a reference!
 
-    # slider: look (animation of ghost-pointer)
-    if (myGlobals.command_record_look == 'stop' ) :
-        myGlobals.anim_image_number.set(myGlobals.ghost_look)
+    # slider: animation of ghost-pointer
+    if (myGlobals.command_record_animation == 'stop' ) :
+        myGlobals.anim_image_number.set(myGlobals.ghost_animation)
 
     update_info()
 
@@ -290,8 +290,8 @@ def save_data():
     #posy
     save_some_data(myGlobals.args.posy_file, myGlobals.data_posy)
 
-    #look
-    save_some_data(myGlobals.args.look_file, myGlobals.data_look)
+    #animation
+    save_some_data(myGlobals.args.anim_file, myGlobals.data_animation)
 
     #marker low
     tmp = []
@@ -342,7 +342,7 @@ def load_data(
         myGlobals.data_posx.append(tmp_l[i] + (tmp_h[i] << 8))
     
     myGlobals.data_posy = load_some_data(myGlobals.args.posy_file)
-    myGlobals.data_look = load_some_data(myGlobals.args.look_file)
+    myGlobals.data_animation = load_some_data(myGlobals.args.anim_file)
 
     tmp_l = load_some_data(myGlobals.args.marker_lo_file)
     tmp_h = load_some_data(myGlobals.args.marker_hi_file)
@@ -491,8 +491,8 @@ def play_pos_to_ghost() :
     if (myGlobals.play_pos < 0) : myGlobals.play_pos = len(myGlobals.data_posx)-1
     if (myGlobals.play_pos > len(myGlobals.data_posx)-1) : myGlobals.play_pos = 0
 
-    if (myGlobals.command_record_look == 'start') :
-        myGlobals.data_look[myGlobals.play_pos] = myGlobals.anim_image_number.get() % myGlobals.anim_image_max
+    if (myGlobals.command_record_animation == 'start') :
+        myGlobals.data_animation[myGlobals.play_pos] = myGlobals.anim_image_number.get() % myGlobals.anim_image_max
 
     factor = len(myGlobals.data_posx)
     if (factor == 0) : factor = 1
@@ -500,7 +500,7 @@ def play_pos_to_ghost() :
     if (len(myGlobals.data_posx)>0) :
         myGlobals.ghost_posx = myGlobals.data_posx[myGlobals.play_pos]*2
         myGlobals.ghost_posy = myGlobals.data_posy[myGlobals.play_pos]*2
-        myGlobals.ghost_look = myGlobals.data_look[myGlobals.play_pos]
+        myGlobals.ghost_animation = myGlobals.data_animation[myGlobals.play_pos]
         myGlobals.timeline_position.set( int(( myGlobals.play_pos / factor )*100) )
     refresh_image()
 #    root.update()
@@ -565,7 +565,7 @@ def mouseMotion(event):
         tmp_posy = int(myGlobals.mouse_posy/2)
         myGlobals.data_posx.append(tmp_posx)
         myGlobals.data_posy.append(tmp_posy & 0b11111111)
-        myGlobals.data_look.append(0)
+        myGlobals.data_animation.append(0)
 
 
     refresh_image()

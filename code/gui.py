@@ -204,7 +204,7 @@ def create_player_controls (
             ('go to marker', myGlobals.GFX_MARKER_GOTO, 0, 0,2, action.marker_goto),
             ('next marker', myGlobals.GFX_MARKER_NEXT, 0, 0,3, action.marker_next),
             ('delete marker', myGlobals.GFX_MARKER_DELETE, 0, 0,4, action.marker_delete),
-            ('record look', myGlobals.GFX_RECORD_LOOK, 0, 0,5, action.record_look),
+            ('record animation', myGlobals.GFX_RECORD_ANIMATION, 0, 0,5, action.toggle_record_animation),
 
             ('previous', myGlobals.GFX_PREVIOUS, 3, 1,0, action.play_prev),
             ('backward', myGlobals.GFX_BACKWARD, 0, 1,1, action.play_backward),
@@ -227,7 +227,7 @@ def create_player_controls (
         )
         if (text == 'forward') : myGlobals.button_forward = my_button
         if (text == 'backward') : myGlobals.button_backward = my_button
-        if (text == 'record look') : myGlobals.button_record_look = my_button
+        if (text == 'record animation') : myGlobals.button_record_animation = my_button
         #placement in grid layout
         my_button.grid(
             row= my_row,

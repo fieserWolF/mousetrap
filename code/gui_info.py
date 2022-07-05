@@ -20,10 +20,11 @@ def show_info_window (
         '---------------\n' \
         'r: reset\n' \
         'f: play forward\n' \
-        '<space>: stop\n' \
+        '<space>: stop playback\n' \
         'b: play backward\n' \
         'n: play next step\n' \
         'v: play previous step\n' \
+        'a: toggle record animation on/off\n' \
         '\n' \
         'marker controls\n' \
         '---------------\n' \

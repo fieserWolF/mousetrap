@@ -27,16 +27,16 @@ def _main_procedure() :
     #https://docs.python.org/3/library/argparse.html
     parser = argparse.ArgumentParser(
         description='This records mouse movements and writes them to binary data files. Press F1 for help in the program.',
-        epilog='Example: ./mousetrap.py -b image.png -p ball.png -a rocket.webp -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -l look.bin -ml marker_lo.bin -mh marker_hi.bin'
+        epilog='Example: ./mousetrap.py -b image.png -p ball.png -ai rocket.webp -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -a animation.bin -ml marker_lo.bin -mh marker_hi.bin'
     )
-    parser.add_argument('-a', '--anim_file', dest='anim_file', help='animation pointer image file')
+    parser.add_argument('-ai', '--anim_image_file', dest='anim_image_file', help='animation pointer image file')
     parser.add_argument('-b', '--background_file', dest='background_file', help='background image file ('+str(myGlobals.IMAGE_WIDTH)+'x'+str(myGlobals.IMAGE_HEIGHT)+' pixel)')
     parser.add_argument('-p', '--pointer_file', dest='pointer_file', help='optional pointer image file ('+str(myGlobals.OBJ_WIDTH)+'x'+str(myGlobals.OBJ_HEIGHT)+' pixel): it follows the mousepointer')
     parser.add_argument('-g', '--ghost_file', dest='ghost_file', help='optional ghost pointer image file ('+str(myGlobals.GHOST_WIDTH)+'x'+str(myGlobals.GHOST_HEIGHT)+' pixel): it follows the recorded data')
     parser.add_argument('-xl', '--posx_lo_file', dest='posx_lo_file', help='posx low file (default="posx_lo.bin")', default='posx_lo.bin')
     parser.add_argument('-xh', '--posx_hi_file', dest='posx_hi_file', help='posx high file (default="posx_hi.bin")', default='posx_hi.bin')
     parser.add_argument('-y', '--posy_file', dest='posy_file', help='posy file (default="posy.bin")', default='posy.bin')
-    parser.add_argument('-l', '--look_file', dest='look_file', help='look-datafile: which sprite is used for each position (default="look.bin")', default='look.bin')
+    parser.add_argument('-a', '--animation_file', dest='anim_file', help='animation-datafile: which sprite is used for each position (default="animation.bin")', default='animation.bin')
     parser.add_argument('-ml', '--marker_lo_file', dest='marker_lo_file', help='marker file (default="marker_lo.bin")', default='marker_lo.bin')
     parser.add_argument('-mh', '--marker_hi_file', dest='marker_hi_file', help='marker file (default="marker_hi.bin")', default='marker_hi.bin')
     myGlobals.args = parser.parse_args()
@@ -72,6 +72,7 @@ def _main_procedure() :
     myGlobals.root.bind_all('<Alt-i>', lambda event: gui.OpenFile_Image())
     myGlobals.root.bind_all('<Alt-p>', lambda event: gui.OpenFile_Pointer())
     myGlobals.root.bind_all('<Alt-g>', lambda event: gui.OpenFile_Ghost())
+    myGlobals.root.bind_all('<Alt-a>', lambda event: gui.OpenFile_Animation())
     myGlobals.root.bind_all('<Alt-s>', lambda event: action.save_data())
     myGlobals.root.bind_all('<Alt-r>', lambda event: action.load_data())
     myGlobals.root.bind_all('<F1>', lambda event: gui_info.show_info_window())
@@ -85,6 +86,7 @@ def _main_procedure() :
     myGlobals.root.bind_all('n', lambda event: action.marker_next())
     myGlobals.root.bind_all('p', lambda event: action.marker_previous())
     myGlobals.root.bind_all('g', lambda event: action.marker_goto())
+    myGlobals.root.bind_all('a', lambda event: action.toggle_record_animation())
 
     myGlobals.root.protocol('WM_DELETE_WINDOW', gui.quit_application)
     myGlobals.root.after(10, play_thread)
@@ -98,8 +100,8 @@ def _main_procedure() :
     if (myGlobals.args.pointer_file) :
         action.load_image_ball(myGlobals.args.pointer_file)
 
-    if (myGlobals.args.anim_file) :
-        action.load_image_anim(myGlobals.args.anim_file)
+    if (myGlobals.args.anim_image_file) :
+        action.load_image_anim(myGlobals.args.anim_image_file)
 
     if (myGlobals.args.ghost_file) :
         action.load_image_ghost(myGlobals.args.ghost_file)
