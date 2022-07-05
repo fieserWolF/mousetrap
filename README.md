@@ -91,7 +91,7 @@ Alt+q|quit
 Alt+i|open image
 Alt+p|open pointer-image
 Alt+g|open ghost-image
-Alt+g|open animation-image
+Alt+a|open animation-image
 Alt+s|save data
 Alt+r|reload data
 
