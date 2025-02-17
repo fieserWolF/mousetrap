@@ -47,7 +47,7 @@ animation.bin|look of sprite, animation steps (values 0 to 255)
 
 # Commandline options
 
-    MouseTrap v1.05 [03.07.2022] *** by fieserWolF
+    MouseTrap v1.07 [17.02.2025] *** by fieserWolF
     usage: mousetrap.py [-h] [-ai ANIM_IMAGE_FILE] [-b BACKGROUND_FILE] [-p POINTER_FILE] [-g GHOST_FILE] [-xl POSX_LO_FILE] [-xh POSX_HI_FILE]
                         [-y POSY_FILE] [-a ANIM_FILE] [-ml MARKER_LO_FILE] [-mh MARKER_HI_FILE]
 
@@ -100,13 +100,21 @@ Alt+r|reload data
 
 control|function
 ---|---
-r|reset
-f|play forward
+pos1|go to start
+end|go to end
+cursor up|play forward
 space|stop playback
-b|play backward
-n|play next step
-v|play previous step
+return| toggle record movement
+cursor down|play backward
+cursor right|play next step
+cursor left|play previous step
+
+## animation controls
+control|function
+---|---
 a|toggle record animation on/off
+c|next animation step
+x|previous animation step
 
 ## marker controls
 
@@ -173,6 +181,12 @@ If you have a feature request, a bug report or if you want to offer help, please
 or
 [wolf@abyss-connection.de](wolf@abyss-connection.de)
 
+
+## Changes in 1.07
+
+- improved keybindings
+- added: jump to start and end of timeline
+- bugfixes
 
 ## Changes in 1.05
 

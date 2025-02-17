@@ -27,9 +27,13 @@ def play_stop () :
     
 def play_forward () :
     #writes command_play
-    if (myGlobals.command_play == 'play forward') :
+    if (
+        (myGlobals.command_play == 'play forward') |
+        (myGlobals.command_play == 'play backward')
+    ) :
         myGlobals.command_play = 'stop'
         myGlobals.button_forward.configure(relief=RAISED)
+        myGlobals.button_backward.configure(relief=RAISED)
         return None
         
     myGlobals.command_play = 'play forward'
@@ -38,21 +42,57 @@ def play_forward () :
 
 def play_backward () :
     #writes command_play
-    if (myGlobals.command_play == 'play backward') :
+    if (
+        (myGlobals.command_play == 'play forward') |
+        (myGlobals.command_play == 'play backward')
+    ) :
         myGlobals.command_play = 'stop'
+        myGlobals.button_forward.configure(relief=RAISED)
         myGlobals.button_backward.configure(relief=RAISED)
         return None
         
     myGlobals.command_play = 'play backward'
     myGlobals.button_backward.configure(relief=SUNKEN)
     myGlobals.button_forward.configure(relief=RAISED)
-        
-        
+
     
+def play_user_next () :
+    #writes command_play
+    if (
+        (myGlobals.command_play == 'play forward') |
+        (myGlobals.command_play == 'play backward')
+    ) :
+        myGlobals.command_play = 'stop'
+        myGlobals.button_forward.configure(relief=RAISED)
+        myGlobals.button_backward.configure(relief=RAISED)
+        return None
+        
+    myGlobals.command_play = 'play next'
+    myGlobals.button_next.configure(relief=SUNKEN)
+    myGlobals.button_previous.configure(relief=RAISED)
+
+
+def play_user_prev () :
+    #writes command_play
+    if (
+        (myGlobals.command_play == 'play forward') |
+        (myGlobals.command_play == 'play backward')
+    ) :
+        myGlobals.command_play = 'stop'
+        myGlobals.button_forward.configure(relief=RAISED)
+        myGlobals.button_backward.configure(relief=RAISED)
+        return None
+        
+    myGlobals.command_play = 'play prev'
+    myGlobals.button_previous.configure(relief=SUNKEN)
+    myGlobals.button_next.configure(relief=RAISED)
+
+
 def play_next () :
     #writes play_pos
     myGlobals.play_pos += 1
     play_pos_to_ghost()
+
 
 def play_prev () :
     #writes play_pos
@@ -60,11 +100,27 @@ def play_prev () :
     play_pos_to_ghost()
     
     
-def play_reset () :
+def play_start() :
     #writes play_pos
     myGlobals.play_pos = 0
     play_pos_to_ghost()
             
+
+def play_end() :
+    #writes play_pos
+    myGlobals.play_pos = len(myGlobals.data_posx)-1
+    play_pos_to_ghost()
+            
+
+def anim_next () :
+    myGlobals.anim_image_number.set((myGlobals.anim_image_number.get() + 1 ) % 16)
+#    play_pos_to_ghost()
+
+def anim_prev () :
+    myGlobals.anim_image_number.set((myGlobals.anim_image_number.get() - 1 ) % 16)
+#    play_pos_to_ghost()
+    
+    
 
 
 def timeline_slider_moved(self):
@@ -373,7 +429,6 @@ def load_background_image(
 ):
     #writes background_image
     print('Opening background-image "%s"...' % filename)
-
     myGlobals.background_image = PilImage.open(filename)
     myGlobals.background_image = myGlobals.background_image.resize((myGlobals.IMAGE_VISIBLE_WIDTH, myGlobals.IMAGE_VISIBLE_HEIGHT))
     myGlobals.background_image = myGlobals.background_image.convert('RGB')
@@ -507,6 +562,9 @@ def play_pos_to_ghost() :
 
 
 def mouseButton1(event):
+    toggle_record_movement()
+    
+def toggle_record_movement():
     #if (flag_play == True) : return None
 
     if myGlobals.flag_record : record_Stop()

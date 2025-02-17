@@ -2,6 +2,7 @@ import code.myGlobals as myGlobals
 import code.gui as gui
 import code.action as action
 import code.gui_info as gui_info
+import sys
 
 from tkinter import *
 import argparse
@@ -10,8 +11,19 @@ import argparse
 
 
 def play_thread():
+    if (myGlobals.command_play == 'play next'):
+        myGlobals.command_play = 'stop'
+        action.play_next()
+        myGlobals.button_next.configure(relief=RAISED)
+
+    if (myGlobals.command_play == 'play prev'):
+        myGlobals.command_play = 'stop'
+        action.play_prev()
+        myGlobals.button_previous.configure(relief=RAISED)
+
     if (myGlobals.command_play == 'play forward'): action.play_next()
     if (myGlobals.command_play == 'play backward'): action.play_prev()
+
     myGlobals.root.after(myGlobals.PLAYER_SPEED_MAX+1-int(myGlobals.player_speed.get()), play_thread)
 
 
@@ -27,10 +39,12 @@ def _main_procedure() :
     #https://docs.python.org/3/library/argparse.html
     parser = argparse.ArgumentParser(
         description='This records mouse movements and writes them to binary data files. Press F1 for help in the program.',
-        epilog='Example: ./mousetrap.py -b image.png -p ball.png -ai rocket.webp -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -a animation.bin -ml marker_lo.bin -mh marker_hi.bin'
+        epilog='Example: '+sys.argv[0]+' -b image.png -bx 384 -by 272 -p ball.png -ai rocket.webp -g ghost.png -xl posx-low.bin -xh posx-high.bin -y posy.bin -a animation.bin -ml marker_lo.bin -mh marker_hi.bin'
     )
     parser.add_argument('-ai', '--anim_image_file', dest='anim_image_file', help='animation pointer image file')
     parser.add_argument('-b', '--background_file', dest='background_file', help='background image file ('+str(myGlobals.IMAGE_WIDTH)+'x'+str(myGlobals.IMAGE_HEIGHT)+' pixel)')
+    parser.add_argument('-bw', '--background_width', dest='background_width', help='background width (default='+str(myGlobals.IMAGE_WIDTH)+')', type=int, default=myGlobals.IMAGE_WIDTH)
+    parser.add_argument('-bh', '--background_height', dest='background_height', help='background height (default='+str(myGlobals.IMAGE_HEIGHT)+')', type=int, default=myGlobals.IMAGE_HEIGHT)
     parser.add_argument('-p', '--pointer_file', dest='pointer_file', help='optional pointer image file ('+str(myGlobals.OBJ_WIDTH)+'x'+str(myGlobals.OBJ_HEIGHT)+' pixel): it follows the mousepointer')
     parser.add_argument('-g', '--ghost_file', dest='ghost_file', help='optional ghost pointer image file ('+str(myGlobals.GHOST_WIDTH)+'x'+str(myGlobals.GHOST_HEIGHT)+' pixel): it follows the recorded data')
     parser.add_argument('-xl', '--posx_lo_file', dest='posx_lo_file', help='posx low file (default="posx_lo.bin")', default='posx_lo.bin')
@@ -40,7 +54,11 @@ def _main_procedure() :
     parser.add_argument('-ml', '--marker_lo_file', dest='marker_lo_file', help='marker file (default="marker_lo.bin")', default='marker_lo.bin')
     parser.add_argument('-mh', '--marker_hi_file', dest='marker_hi_file', help='marker file (default="marker_hi.bin")', default='marker_hi.bin')
     myGlobals.args = parser.parse_args()
- 
+
+    myGlobals.IMAGE_VISIBLE_WIDTH = myGlobals.args.background_width*2
+    myGlobals.IMAGE_VISIBLE_HEIGHT = myGlobals.args.background_height*2
+    myGlobals.TIMELINE_WIDTH    = myGlobals.IMAGE_VISIBLE_WIDTH
+
     #main procedure
     title_string = myGlobals.PROGNAME+' v'+myGlobals.VERSION+' ['+myGlobals.LAST_EDITED+'] *** by fieserWolF'
     myGlobals.root.title(title_string)
@@ -76,17 +94,21 @@ def _main_procedure() :
     myGlobals.root.bind_all('<Alt-s>', lambda event: action.save_data())
     myGlobals.root.bind_all('<Alt-r>', lambda event: action.load_data())
     myGlobals.root.bind_all('<F1>', lambda event: gui_info.show_info_window())
-    myGlobals.root.bind_all('r', lambda event: action.play_reset())
-    myGlobals.root.bind_all('f', lambda event: action.play_forward())
+    myGlobals.root.bind_all('<Home>', lambda event: action.play_start())
+    myGlobals.root.bind_all('<End>', lambda event: action.play_end())
+    myGlobals.root.bind_all('<Up>', lambda event: action.play_forward())
     myGlobals.root.bind_all('<space>', lambda event: action.play_stop())
-    myGlobals.root.bind_all('b', lambda event: action.play_backward())
-    myGlobals.root.bind_all('n', lambda event: action.play_next())
-    myGlobals.root.bind_all('v', lambda event: action.play_prev())
+    myGlobals.root.bind_all('<Down>', lambda event: action.play_backward())
+    myGlobals.root.bind_all('<Right>', lambda event: action.play_user_next())
+    myGlobals.root.bind_all('<Left>', lambda event: action.play_user_prev())
     myGlobals.root.bind_all('m', lambda event: action.marker_set())
     myGlobals.root.bind_all('n', lambda event: action.marker_next())
     myGlobals.root.bind_all('p', lambda event: action.marker_previous())
     myGlobals.root.bind_all('g', lambda event: action.marker_goto())
     myGlobals.root.bind_all('a', lambda event: action.toggle_record_animation())
+    myGlobals.root.bind_all('c', lambda event: action.anim_next())
+    myGlobals.root.bind_all('x', lambda event: action.anim_prev())
+    myGlobals.root.bind_all('<Return>', lambda event: action.toggle_record_movement())
 
     myGlobals.root.protocol('WM_DELETE_WINDOW', gui.quit_application)
     myGlobals.root.after(10, play_thread)

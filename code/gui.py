@@ -206,12 +206,13 @@ def create_player_controls (
             ('delete marker', myGlobals.GFX_MARKER_DELETE, 0, 0,4, action.marker_delete),
             ('record animation', myGlobals.GFX_RECORD_ANIMATION, 0, 0,5, action.toggle_record_animation),
 
-            ('previous', myGlobals.GFX_PREVIOUS, 3, 1,0, action.play_prev),
+            ('previous', myGlobals.GFX_PREVIOUS, 3, 1,0, action.play_user_prev),
             ('backward', myGlobals.GFX_BACKWARD, 0, 1,1, action.play_backward),
             ('stop', myGlobals.GFX_STOP, 0, 1,2, action.play_stop),
             ('forward', myGlobals.GFX_FORWARD, 0, 1,3, action.play_forward),
-            ('next', myGlobals.GFX_NEXT, 0, 1,4, action.play_next),
-            ('reset', myGlobals.GFX_RESET, 0, 1,5, action.play_reset),
+            ('next', myGlobals.GFX_NEXT, 0, 1,4, action.play_user_next),
+            ('start', myGlobals.GFX_START, 0, 1,5, action.play_start),
+            ('end', myGlobals.GFX_END, 0, 1,6, action.play_end),
     ]
     
     for text, my_image, my_underline, my_row, my_column, my_command in MODES:
@@ -228,6 +229,8 @@ def create_player_controls (
         if (text == 'forward') : myGlobals.button_forward = my_button
         if (text == 'backward') : myGlobals.button_backward = my_button
         if (text == 'record animation') : myGlobals.button_record_animation = my_button
+        if (text == 'previous') : myGlobals.button_previous = my_button
+        if (text == 'next') : myGlobals.button_next = my_button
         #placement in grid layout
         my_button.grid(
             row= my_row,

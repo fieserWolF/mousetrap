@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-MouseTrap v1.05 [03.07.2022] *** by fieserWolF
+MouseTrap v1.07 [17.02.2025] *** by fieserWolF
 usage: mousetrap.py [-h] [-ai ANIM_IMAGE_FILE] [-b BACKGROUND_FILE] [-p POINTER_FILE] [-g GHOST_FILE] [-xl POSX_LO_FILE] [-xh POSX_HI_FILE]
                     [-y POSY_FILE] [-a ANIM_FILE] [-ml MARKER_LO_FILE] [-mh MARKER_HI_FILE]
 

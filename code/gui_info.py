@@ -18,13 +18,20 @@ def show_info_window (
         '\n' \
         'player controls\n' \
         '---------------\n' \
-        'r: reset\n' \
-        'f: play forward\n' \
+        '<Pos1>: go to start\n' \
+        '<End>: go to end\n' \
+        '<Up>: play forward\n' \
         '<space>: stop playback\n' \
-        'b: play backward\n' \
-        'n: play next step\n' \
-        'v: play previous step\n' \
+        '<return>: toggle record movement\n' \
+        '<Down>: play backward\n' \
+        '<Right>: play next step\n' \
+        '<Left>: play previous step\n' \
+        '\n' \
+        'animation controls\n' \
+        '---------------\n' \
         'a: toggle record animation on/off\n' \
+        'c: next animation step\n' \
+        'x: previous animation step\n' \
         '\n' \
         'marker controls\n' \
         '---------------\n' \

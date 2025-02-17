@@ -15,7 +15,8 @@ def _global_constants():
         return None
     
 #GFX_PLAY = resource_path('resources/icon_play.xbm')
-GFX_RESET = resource_path('resources/icon_reset.xbm')
+GFX_START = resource_path('resources/icon_start.xbm')
+GFX_END = resource_path('resources/icon_end.xbm')
 #GFX_EXIT = resource_path('resources/icon_exit.xbm')
 
 GFX_FORWARD = resource_path('resources/icon_forward.xbm')
@@ -43,8 +44,8 @@ GFX_TIMELINE_MARKER = resource_path('resources/marker.png')
 
 
 PROGNAME = 'MouseTrap';
-VERSION = '1.05';
-LAST_EDITED = '03.07.2022';
+VERSION = '1.07';
+LAST_EDITED = '17.02.2025';
 
 IMAGE_WIDTH     = 320
 IMAGE_HEIGHT    = 200
@@ -127,6 +128,8 @@ button_play = Button()
 button_forward = Button()
 button_backward = Button()
 button_record_animation = Button()
+button_previous = Button()
+button_next = Button()
 
 textvariable_mode   = StringVar()
 textvariable_coords = StringVar()
